@@ -1,0 +1,54 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Diagnostic & Tooling data
+.gemini/
+.agents/
+
+# Dependency directories
+node_modules/
+jspm_packages/
+web_modules/
+
+# Production & Build outputs
+dist/
+dist-ssr/
+build/
+*.local
+
+# Environment & Sensitive files
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.cert
+*.p12
+*.pfx
+secrets.json
+config.secret.json
+credentials.json
+
+# Editor & OS files
+.vscode/
+!.vscode/extensions.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.DS_Store
+Thumbs.db
+
+# Cache directories
+.eslintcache
+.stylelintcache
+.cache/
+.vite/

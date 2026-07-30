@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>InterviewPro | Candidate Dashboard</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Manrope:wght@600;700;800&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Theme Config -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "error-container": "#ffdad6",
+                "on-secondary-fixed": "#00201d",
+                "secondary-fixed-dim": "#6bd8cb",
+                "on-secondary": "#ffffff",
+                "surface-container-lowest": "#ffffff",
+                "surface-container-highest": "#d3e4fe",
+                "on-surface": "#0b1c30",
+                "surface-bright": "#f8f9ff",
+                "secondary-fixed": "#89f5e7",
+                "surface-variant": "#d3e4fe",
+                "secondary": "#006a61",
+                "on-error-container": "#93000a",
+                "inverse-on-surface": "#eaf1ff",
+                "surface-container-high": "#dce9ff",
+                "on-tertiary-container": "#818486",
+                "on-secondary-container": "#006f66",
+                "inverse-primary": "#bec6e0",
+                "outline": "#76777d",
+                "on-tertiary": "#ffffff",
+                "primary-fixed-dim": "#bec6e0",
+                "on-error": "#ffffff",
+                "secondary-container": "#86f2e4",
+                "tertiary-container": "#191c1e",
+                "inverse-surface": "#213145",
+                "on-secondary-fixed-variant": "#005049",
+                "on-primary-container": "#7c839b",
+                "on-surface-variant": "#45464d",
+                "on-background": "#0b1c30",
+                "on-primary-fixed": "#131b2e",
+                "on-primary-fixed-variant": "#3f465c",
+                "surface-container-low": "#eff4ff",
+                "primary-container": "#131b2e",
+                "error": "#ba1a1a",
+                "on-primary": "#ffffff",
+                "surface-container": "#e5eeff",
+                "primary-fixed": "#dae2fd",
+                "outline-variant": "#c6c6cd",
+                "on-tertiary-fixed-variant": "#444749",
+                "primary": "#000000",
+                "surface-tint": "#565e74",
+                "on-tertiary-fixed": "#191c1e",
+                "background": "#f8f9ff",
+                "surface-dim": "#cbdbf5",
+                "surface": "#f8f9ff",
+                "tertiary-fixed": "#e0e3e5",
+                "tertiary-fixed-dim": "#c4c7c9",
+                "tertiary": "#000000"
+            },
+            "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+            },
+            "spacing": {
+                "xs": "8px",
+                "container-max": "1280px",
+                "md": "24px",
+                "sm": "16px",
+                "base": "4px",
+                "lg": "48px",
+                "xl": "80px",
+                "gutter": "24px"
+            },
+            "fontFamily": {
+                "headline-lg-mobile": ["Manrope"],
+                "body-lg": ["Inter"],
+                "label-caps": ["Inter"],
+                "headline-xl": ["Manrope"],
+                "label-code": ["JetBrains Mono"],
+                "headline-lg": ["Manrope"],
+                "headline-md": ["Manrope"],
+                "body-sm": ["Inter"],
+                "body-md": ["Inter"]
+            },
+            "fontSize": {
+                "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                "headline-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                "label-code": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .card-hover:hover {
+            border-color: #006a61;
+            transition: border-color 0.3s ease;
+        }
+        .bento-cell {
+            background-color: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 1rem;
+            padding: 24px;
+        }
+        body {
+            background-color: #f8f9ff;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="font-body-md text-on-surface">
+<!-- TopAppBar -->
+<header class="w-full top-0 sticky bg-surface dark:bg-surface-dim border-b border-outline-variant dark:border-outline z-40">
+<div class="flex items-center justify-between px-md py-xs w-full max-w-container-max mx-auto">
+<div class="flex items-center gap-sm">
+<span class="font-headline-md text-headline-md font-bold text-secondary dark:text-secondary-fixed">InterviewPro</span>
+</div>
+<nav class="hidden md:flex items-center space-x-lg">
+<a class="font-label-caps text-label-caps text-secondary dark:text-secondary-fixed font-semibold px-xs py-base hover:bg-surface-container-low transition-colors duration-300" href="#">Dashboard</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-low transition-colors duration-300" href="#">Room</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-low transition-colors duration-300" href="#">Jobs</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-low transition-colors duration-300" href="#">Schedule</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-low transition-colors duration-300" href="#">Feedback</a>
+</nav>
+<div class="flex items-center gap-sm">
+<button class="material-symbols-outlined p-xs text-primary dark:text-primary-fixed hover:bg-surface-container-low rounded-full transition-all">notifications</button>
+<div class="w-10 h-10 rounded-full overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A clean and professional headshot of a senior software developer candidate, smiling confidently in a modern studio setting with soft lighting. The background is a blurred, minimalist corporate office with neutral tones. High-end portrait photography style, shallow depth of field, 8k resolution." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVEKrlJ0pXceziDMC3PnmuByWQiT5CNoWV_kGnML41rAmURkzFBkk_b7VQq3Bx06Pv01d31JJQxVdHY4DHhYmY0v8B7OiM_cXuO39M40jwQ_9ztQoMK-x7k7zUB7fOOPcGJiJa11ENWdUn-7pMQRYqGuXmuw0ScYPkrpHcF4PWf419UOaVpbcwsj-Os1Ed0VXKv9FEEt5oGE-kBv3cacaSZtGlm9843pwuEee1Rao0Ol1pQ0iSu10i"/>
+</div>
+</div>
+</div>
+</header>
+<main class="max-w-container-max mx-auto px-md py-lg md:py-xl">
+<!-- Welcome Header -->
+<div class="mb-lg">
+<h1 class="font-headline-lg text-headline-lg text-on-surface mb-base">Hello, Alex Rivers</h1>
+<p class="font-body-md text-on-surface-variant">You have <span class="font-bold text-secondary">3 interviews</span> scheduled for this week. You're doing great!</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- Hero Card: Next Interview (Bento Large) -->
+<section class="md:col-span-8 bento-cell relative overflow-hidden flex flex-col justify-between min-h-[320px] shadow-sm active:scale-[0.99] transition-transform cursor-pointer">
+<div class="relative z-10">
+<div class="flex items-center gap-xs mb-sm">
+<span class="flex h-2 w-2 rounded-full bg-secondary"></span>
+<span class="font-label-caps text-label-caps text-secondary uppercase tracking-wider">Next Up</span>
+</div>
+<h2 class="font-headline-md text-headline-md mb-xs">Senior Frontend Engineer</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">At GlobalTech Systems • Round 3 (Technical)</p>
+</div>
+<div class="relative z-10 flex flex-wrap items-end justify-between gap-md mt-lg">
+<div class="flex flex-col gap-xs">
+<div class="flex items-center gap-xs text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]">calendar_month</span>
+<span class="font-body-md">Tomorrow, Oct 12 • 10:00 AM</span>
+</div>
+<div class="flex items-center gap-xs text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]">video_chat</span>
+<span class="font-body-md">Google Meet</span>
+</div>
+</div>
+<button class="bg-secondary text-on-secondary px-lg py-sm rounded-lg font-label-caps text-label-caps hover:brightness-110 transition-all">Prepare Now</button>
+</div>
+<!-- Atmospheric Background Shader for Hero -->
+
+</section>
+<!-- Quick Prep Tip (Bento Side) -->
+<section class="md:col-span-4 bento-cell flex flex-col justify-center items-center text-center bg-secondary-container dark:bg-on-secondary-fixed-variant border-none">
+<span class="material-symbols-outlined text-[48px] text-on-secondary-container mb-sm" style="font-variation-settings: 'FILL' 1;">lightbulb</span>
+<h3 class="font-headline-md text-headline-md text-on-secondary-container mb-xs">Pro Tip</h3>
+<p class="font-body-md text-on-secondary-container opacity-90 px-sm">Review the "S.T.A.R" method for behavioral questions. Interviewers at GlobalTech highly value detailed execution stories.</p>
+<a class="mt-md text-on-secondary-container font-bold border-b border-on-secondary-container pb-base hover:opacity-75 transition-opacity" href="#">Read Preparation Guide</a>
+</section>
+<!-- Application Status (Bento List) -->
+<section class="md:col-span-7 bento-cell">
+<div class="flex items-center justify-between mb-md">
+<h3 class="font-headline-md text-headline-md">Application Status</h3>
+<button class="text-secondary font-label-caps text-label-caps hover:underline">View All</button>
+</div>
+<div class="space-y-sm">
+<!-- Status Row -->
+<div class="flex items-center justify-between p-sm hover:bg-surface-container-low rounded-xl transition-colors group">
+<div class="flex items-center gap-sm">
+<div class="w-12 h-12 bg-surface-container rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary">domain</span>
+</div>
+<div>
+<p class="font-body-md font-semibold">Starlight Ventures</p>
+<p class="font-body-sm text-on-surface-variant">Product Designer</p>
+</div>
+</div>
+<span class="px-sm py-base bg-secondary-container text-on-secondary-container rounded-full font-label-caps text-[10px]">Interviewing</span>
+</div>
+<!-- Status Row -->
+<div class="flex items-center justify-between p-sm hover:bg-surface-container-low rounded-xl transition-colors group">
+<div class="flex items-center gap-sm">
+<div class="w-12 h-12 bg-surface-container rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary">rocket_launch</span>
+</div>
+<div>
+<p class="font-body-md font-semibold">Nebula Cloud</p>
+<p class="font-body-sm text-on-surface-variant">Backend Engineer</p>
+</div>
+</div>
+<span class="px-sm py-base bg-surface-container-highest text-on-primary-container rounded-full font-label-caps text-[10px]">Reviewing</span>
+</div>
+<!-- Status Row -->
+<div class="flex items-center justify-between p-sm hover:bg-surface-container-low rounded-xl transition-colors group">
+<div class="flex items-center gap-sm">
+<div class="w-12 h-12 bg-surface-container rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary">database</span>
+</div>
+<div>
+<p class="font-body-md font-semibold">DataFlow Inc.</p>
+<p class="font-body-sm text-on-surface-variant">Data Scientist</p>
+</div>
+</div>
+<span class="px-sm py-base bg-error-container text-on-error-container rounded-full font-label-caps text-[10px]">Closed</span>
+</div>
+</div>
+</section>
+<!-- Readiness Score (Bento Small) -->
+<section class="md:col-span-5 bento-cell flex flex-col">
+<h3 class="font-headline-md text-headline-md mb-md">Readiness Score</h3>
+<div class="flex-grow flex flex-col justify-center items-center">
+<div class="relative w-40 h-40 flex items-center justify-center mb-md">
+<svg class="w-full h-full transform -rotate-90">
+<circle class="text-surface-container-high" cx="80" cy="80" fill="transparent" r="70" stroke="currentColor" stroke-width="12"></circle>
+<circle class="text-secondary transition-all duration-1000" cx="80" cy="80" fill="transparent" r="70" stroke="currentColor" stroke-dasharray="440" stroke-dashoffset="66" stroke-linecap="round" stroke-width="12"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="font-headline-xl text-headline-xl leading-none">85</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Percent</span>
+</div>
+</div>
+<p class="font-body-sm text-center text-on-surface-variant">Based on your mock interview scores and profile completeness.</p>
+</div>
+</section>
+<!-- Learning Path (Bento Grid Bottom) -->
+<section class="md:col-span-12 bento-cell">
+<div class="flex items-center justify-between mb-lg">
+<div>
+<h3 class="font-headline-md text-headline-md">Recommended Preparation</h3>
+<p class="font-body-sm text-on-surface-variant">Curated tasks to boost your confidence.</p>
+</div>
+<div class="flex gap-sm">
+<button class="material-symbols-outlined p-xs border border-outline-variant rounded-full hover:bg-surface-container-low">chevron_left</button>
+<button class="material-symbols-outlined p-xs border border-outline-variant rounded-full hover:bg-surface-container-low">chevron_right</button>
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-sm">
+<!-- Task Card -->
+<div class="p-md rounded-xl border border-outline-variant hover:border-secondary transition-all cursor-pointer group bg-surface-bright">
+<span class="material-symbols-outlined text-secondary mb-sm" style="font-variation-settings: 'FILL' 1;">code</span>
+<h4 class="font-body-md font-bold mb-xs group-hover:text-secondary">System Design</h4>
+<p class="font-body-sm text-on-surface-variant">Master microservices and scalability patterns.</p>
+</div>
+<!-- Task Card -->
+<div class="p-md rounded-xl border border-outline-variant hover:border-secondary transition-all cursor-pointer group bg-surface-bright">
+<span class="material-symbols-outlined text-secondary mb-sm" style="font-variation-settings: 'FILL' 1;">forum</span>
+<h4 class="font-body-md font-bold mb-xs group-hover:text-secondary">Mock Interview</h4>
+<p class="font-body-sm text-on-surface-variant">30-min AI session focused on leadership.</p>
+</div>
+<!-- Task Card -->
+<div class="p-md rounded-xl border border-outline-variant hover:border-secondary transition-all cursor-pointer group bg-surface-bright">
+<span class="material-symbols-outlined text-secondary mb-sm" style="font-variation-settings: 'FILL' 1;">description</span>
+<h4 class="font-body-md font-bold mb-xs group-hover:text-secondary">Resume Review</h4>
+<p class="font-body-sm text-on-surface-variant">Update your portfolio with recent React 18 projects.</p>
+</div>
+<!-- Task Card -->
+<div class="p-md rounded-xl border border-outline-variant hover:border-secondary transition-all cursor-pointer group bg-surface-bright">
+<span class="material-symbols-outlined text-secondary mb-sm" style="font-variation-settings: 'FILL' 1;">emoji_events</span>
+<h4 class="font-body-md font-bold mb-xs group-hover:text-secondary">Salary Negotiation</h4>
+<p class="font-body-sm text-on-surface-variant">Learn strategies to advocate for your market value.</p>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 bg-surface dark:bg-surface-dim border-t border-outline-variant dark:border-outline shadow-sm">
+<div class="flex justify-around items-center w-full h-16 px-sm pb-safe">
+<a class="flex flex-col items-center justify-center bg-secondary-container dark:bg-on-secondary-fixed-variant text-on-secondary-container dark:text-secondary-fixed-dim rounded-full px-sm py-base transition-transform duration-200 active:scale-90" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-caps text-label-caps">Dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant hover:text-secondary dark:hover:text-secondary-fixed transition-transform duration-200 active:scale-90" href="#">
+<span class="material-symbols-outlined">video_chat</span>
+<span class="font-label-caps text-label-caps">Room</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant hover:text-secondary dark:hover:text-secondary-fixed transition-transform duration-200 active:scale-90" href="#">
+<span class="material-symbols-outlined">work</span>
+<span class="font-label-caps text-label-caps">Jobs</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant hover:text-secondary dark:hover:text-secondary-fixed transition-transform duration-200 active:scale-90" href="#">
+<span class="material-symbols-outlined">calendar_month</span>
+<span class="font-label-caps text-label-caps">Schedule</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant hover:text-secondary dark:hover:text-secondary-fixed transition-transform duration-200 active:scale-90" href="#">
+<span class="material-symbols-outlined">rate_review</span>
+<span class="font-label-caps text-label-caps">Feedback</span>
+</a>
+</div>
+</nav>
+<!-- Floating Action Button -->
+<button class="fixed bottom-20 md:bottom-10 right-6 w-14 h-14 bg-secondary text-on-secondary rounded-full shadow-lg flex items-center justify-center hover:scale-105 active:scale-95 transition-all z-40">
+<span class="material-symbols-outlined text-[32px]">add</span>
+</button>
+<script>
+        // Micro-interaction: Update progress bar circle on load
+        window.addEventListener('DOMContentLoaded', () => {
+            const circle = document.querySelector('circle.text-secondary');
+            if(circle) {
+                // Score is 85% -> 440 * (1 - 0.85) = 66
+                circle.style.strokeDashoffset = '66';
+            }
+        });
+    </script>
+</body></html>

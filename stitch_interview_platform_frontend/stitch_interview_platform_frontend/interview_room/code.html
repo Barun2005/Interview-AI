@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>InterviewPro - Interview Room</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "error-container": "#ffdad6",
+                    "on-secondary-fixed": "#00201d",
+                    "secondary-fixed-dim": "#6bd8cb",
+                    "on-secondary": "#ffffff",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-container-highest": "#d3e4fe",
+                    "on-surface": "#0b1c30",
+                    "surface-bright": "#f8f9ff",
+                    "secondary-fixed": "#89f5e7",
+                    "surface-variant": "#d3e4fe",
+                    "secondary": "#006a61",
+                    "on-error-container": "#93000a",
+                    "inverse-on-surface": "#eaf1ff",
+                    "surface-container-high": "#dce9ff",
+                    "on-tertiary-container": "#818486",
+                    "on-secondary-container": "#006f66",
+                    "inverse-primary": "#bec6e0",
+                    "outline": "#76777d",
+                    "on-tertiary": "#ffffff",
+                    "primary-fixed-dim": "#bec6e0",
+                    "on-error": "#ffffff",
+                    "secondary-container": "#86f2e4",
+                    "tertiary-container": "#191c1e",
+                    "inverse-surface": "#213145",
+                    "on-secondary-fixed-variant": "#005049",
+                    "on-primary-container": "#7c839b",
+                    "on-surface-variant": "#45464d",
+                    "on-background": "#0b1c30",
+                    "on-primary-fixed": "#131b2e",
+                    "on-primary-fixed-variant": "#3f465c",
+                    "surface-container-low": "#eff4ff",
+                    "primary-container": "#131b2e",
+                    "error": "#ba1a1a",
+                    "on-primary": "#ffffff",
+                    "surface-container": "#e5eeff",
+                    "primary-fixed": "#dae2fd",
+                    "outline-variant": "#c6c6cd",
+                    "on-tertiary-fixed-variant": "#444749",
+                    "primary": "#000000",
+                    "surface-tint": "#565e74",
+                    "on-tertiary-fixed": "#191c1e",
+                    "background": "#f8f9ff",
+                    "surface-dim": "#cbdbf5",
+                    "surface": "#f8f9ff",
+                    "tertiary-fixed": "#e0e3e5",
+                    "tertiary-fixed-dim": "#c4c7c9",
+                    "tertiary": "#000000"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "xs": "8px",
+                    "container-max": "1280px",
+                    "md": "24px",
+                    "sm": "16px",
+                    "base": "4px",
+                    "lg": "48px",
+                    "xl": "80px",
+                    "gutter": "24px"
+            },
+            "fontFamily": {
+                    "headline-lg-mobile": ["Manrope"],
+                    "body-lg": ["Inter"],
+                    "label-caps": ["Inter"],
+                    "headline-xl": ["Manrope"],
+                    "label-code": ["JetBrains Mono"],
+                    "headline-lg": ["Manrope"],
+                    "headline-md": ["Manrope"],
+                    "body-sm": ["Inter"],
+                    "body-md": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "headline-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-code": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+        }
+        .video-gradient {
+            background: linear-gradient(to top, rgba(0,0,0,0.4) 0%, transparent 40%);
+        }
+        .code-editor-scrollbar::-webkit-scrollbar {
+            width: 8px;
+        }
+        .code-editor-scrollbar::-webkit-scrollbar-track {
+            background: #131b2e;
+        }
+        .code-editor-scrollbar::-webkit-scrollbar-thumb {
+            background: #3f465c;
+            border-radius: 4px;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body-md selection:bg-secondary-container">
+<!-- Top Navigation (Shell Implementation) -->
+<header class="bg-surface dark:bg-surface-dim w-full top-0 sticky border-b border-outline-variant dark:border-outline z-40">
+<div class="flex items-center justify-between px-md py-xs w-full max-w-container-max mx-auto h-16">
+<div class="flex items-center gap-sm">
+<span class="font-headline-md text-headline-md font-bold text-secondary dark:text-secondary-fixed">InterviewPro</span>
+<div class="hidden md:flex items-center ml-lg gap-md">
+<span class="text-secondary dark:text-secondary-fixed font-semibold font-body-md cursor-default">Room</span>
+<span class="text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-low dark:hover:bg-surface-container-high transition-colors duration-300 px-xs py-base rounded-lg cursor-pointer font-body-md">Dashboard</span>
+<span class="text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-low dark:hover:bg-surface-container-high transition-colors duration-300 px-xs py-base rounded-lg cursor-pointer font-body-md">Schedule</span>
+</div>
+</div>
+<div class="flex items-center gap-sm">
+<div class="hidden sm:flex flex-col items-end mr-xs">
+<span class="text-body-sm font-semibold text-on-surface">Senior Frontend Interview</span>
+<span class="text-xs text-on-surface-variant tracking-wider">00:42:15 ELAPSED</span>
+</div>
+<div class="w-10 h-10 rounded-full border border-outline-variant overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a middle-aged woman with glasses and a kind smile, set against a clean, softly lit minimalist corporate office background with cool blue and white tones to match the InterviewPro brand identity. High-quality corporate photography style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBhGWhmB1aAuq65HKwC7QXza46SFdi7OBPTR6uVRpXQemTxh726gBw2GnOW4mOyVdif7JC3zV1XiZPKlzfB5dSfRJmi_KGQMd4dOvIdrESo7qNq8ts4tdAPfBIA1MuF_VjXTg3I7T8hbDYNxeUdIHhkJ9ebvwGLwJ7j0aPTzykMeo7yM5LO2oRkhTMXn-Vijfe3-a6VlOyO8aDemlbocOyhiQtJL9p5CQuKZtBQgp-OrBTosig5HyLt"/>
+</div>
+<button class="material-symbols-outlined text-primary dark:text-primary-fixed active:scale-95 transition-transform p-xs hover:bg-surface-container-low rounded-full">notifications</button>
+</div>
+</div>
+</header>
+<!-- Main Interview Canvas -->
+<main class="flex flex-col md:flex-row h-[calc(100vh-64px)] overflow-hidden">
+<!-- Primary Video Area -->
+<section class="relative flex-grow bg-on-surface flex items-center justify-center transition-all duration-500 ease-in-out" id="video-canvas">
+<!-- Main Interlocutor Feed -->
+<div class="relative w-full h-full group overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A focused male interviewer in a crisp white shirt, sitting in a modern, brightly lit home office. The lighting is soft and diffused, creating an atmosphere of guided confidence. The background is a clean, minimal bookshelf with professional titles, following the Slate 50 and Deep Blue color palette of the InterviewPro design system." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBHfOcuBcxQoWuQvbr75HHgU6rrMp_wW1mIRDCihz5CSz1tYEwvtgSlDr8YtonWNBHWHv-4PiDfJQIJz-PLKMq-0T4Bb6NMlLStFC3qJ8ahYihPrwiq7GUgJBIXr0-6l5IjtZch8wdSECgSHOsLGxOvESJnIrBo4QCdFiDqtIODbnuYIn6xQo6xlgv-YHnQ1LxGDfbxp290NSS0eZcw3vc_oJ--X1CCwRe9VCLpdQww82hudLsErgqi"/>
+<div class="absolute inset-0 video-gradient pointer-events-none"></div>
+<!-- Overlay Name Tag -->
+<div class="absolute bottom-md left-md flex items-center gap-xs bg-black/40 backdrop-blur-md px-sm py-xs rounded-lg text-white border border-white/10">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">person</span>
+<span class="font-body-sm font-semibold">David Chen (Senior Architect)</span>
+</div>
+<!-- Self View (Floating) -->
+<div class="absolute top-md right-md w-32 h-44 md:w-48 md:h-64 rounded-xl border-2 border-white/20 shadow-lg overflow-hidden group-hover:scale-105 transition-transform duration-300">
+<img class="w-full h-full object-cover" data-alt="A high-quality self-view feed of a young female candidate looking into the camera with a confident expression. She is wearing a dark navy blazer. The lighting is professional and high-key, matching the clean corporate minimalist aesthetic of the platform. The background is a simple, neutral gray wall." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCDQRUsTK6jG7uQ2uX1Bnn-qPyrLz2at3WreAXIi9Ubf3M_ZkDkRegr3WT3IMEhhG1WPazqfqxadU7NU6-R6iCvcpzOOhybfgaTtVeRDf5_lsSXJAA9GXgbLt61VGSLtUg0d7cRVthXL6MCcHUUg_8kmEJ5km7Ttlow97ZQbon86AFLe4_ua-wbg4Xe2V02Sp4xIP7MyXtbXdRHVxh1MDmw1nzJRDVFALYhaSFW90k2rqKtlZYdeW-T"/>
+<div class="absolute bottom-xs left-xs bg-black/40 backdrop-blur-sm px-xs py-1 rounded text-[10px] text-white">You</div>
+</div>
+<!-- Call Controls -->
+<div class="absolute bottom-md left-1/2 -translate-x-1/2 flex items-center gap-sm bg-white/10 backdrop-blur-xl px-md py-sm rounded-full border border-white/10 shadow-xl">
+<button class="w-12 h-12 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white transition-all active:scale-90" title="Mute Microphone">
+<span class="material-symbols-outlined">mic</span>
+</button>
+<button class="w-12 h-12 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white transition-all active:scale-90" title="Stop Video">
+<span class="material-symbols-outlined">videocam</span>
+</button>
+<button class="w-12 h-12 flex items-center justify-center rounded-full bg-secondary-container text-on-secondary-container hover:bg-secondary transition-all active:scale-90" id="toggle-editor" title="Toggle Code Editor">
+<span class="material-symbols-outlined">code</span>
+</button>
+<button class="w-12 h-12 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white transition-all active:scale-90" title="Share Screen">
+<span class="material-symbols-outlined">screen_share</span>
+</button>
+<button class="w-14 h-12 flex items-center justify-center rounded-full bg-error hover:bg-error/90 text-white transition-all active:scale-90 ml-xs" title="Leave Interview">
+<span class="material-symbols-outlined">call_end</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Right Panel (Code Editor / Notes) -->
+<aside class="w-full md:w-[600px] border-l border-outline-variant bg-white flex flex-col transition-all duration-500 ease-in-out" id="collapsible-panel">
+<!-- Panel Header -->
+<div class="flex items-center justify-between px-md py-sm border-b border-outline-variant h-14">
+<div class="flex items-center gap-md">
+<button class="text-secondary font-semibold font-body-md border-b-2 border-secondary h-14 px-xs">Code Editor</button>
+<button class="text-on-surface-variant font-body-md hover:text-on-surface transition-colors h-14 px-xs">Interview Notes</button>
+<button class="text-on-surface-variant font-body-md hover:text-on-surface transition-colors h-14 px-xs">History</button>
+</div>
+<div class="flex items-center gap-xs">
+<span class="text-xs font-label-caps text-on-surface-variant bg-surface-container rounded px-xs py-base">JavaScript</span>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-on-surface">settings</button>
+</div>
+</div>
+<!-- Code Workspace -->
+<div class="flex-grow bg-[#131b2e] relative group flex flex-col">
+<div class="absolute top-sm right-sm z-10 flex gap-xs">
+<button class="flex items-center gap-xs bg-secondary-container hover:bg-secondary text-on-secondary-container hover:text-white px-sm py-base rounded-lg transition-colors font-semibold text-body-sm shadow-sm">
+<span class="material-symbols-outlined text-sm">play_arrow</span>
+                        Run Code
+                    </button>
+</div>
+<!-- Code Content -->
+<div class="flex-grow font-label-code text-label-code text-primary-fixed-dim p-md overflow-y-auto code-editor-scrollbar">
+<pre class="whitespace-pre-wrap"><span class="text-on-secondary-container">/**
+ * Problem: Design a function that performs a deep clone 
+ * of a nested object without using JSON.stringify.
+ */</span>
+
+<span class="text-secondary-fixed-dim">function</span> <span class="text-surface-container-highest">deepClone</span>(obj) {
+  <span class="text-secondary-fixed-dim">if</span> (obj === <span class="text-error-container">null</span> || <span class="text-secondary-fixed-dim">typeof</span> obj !== <span class="text-on-primary-container">'object'</span>) {
+    <span class="text-secondary-fixed-dim">return</span> obj;
+  }
+
+  <span class="text-secondary-fixed-dim">let</span> clone = <span class="text-secondary-fixed-dim">Array.isArray</span>(obj) ? [] : {};
+
+  <span class="text-secondary-fixed-dim">for</span> (<span class="text-secondary-fixed-dim">let</span> key <span class="text-secondary-fixed-dim">in</span> obj) {
+    <span class="text-secondary-fixed-dim">if</span> (Object.prototype.hasOwnProperty.call(obj, key)) {
+      clone[key] = deepClone(obj[key]);
+    }
+  }
+
+  <span class="text-secondary-fixed-dim">return</span> clone;
+}
+
+<span class="text-on-secondary-container">// Test Case</span>
+<span class="text-secondary-fixed-dim">const</span> original = { a: 1, b: { c: 2 } };
+<span class="text-secondary-fixed-dim">const</span> result = deepClone(original);
+console.log(result.b.c === original.b.c); <span class="text-on-secondary-container">// false (different ref)</span>
+</pre>
+<div class="animate-pulse w-0.5 h-5 bg-secondary ml-1 inline-block align-middle"></div>
+</div>
+<!-- Terminal Output Overlay -->
+<div class="h-1/4 bg-[#0b1c30] border-t border-[#131b2e] p-sm">
+<div class="flex items-center justify-between mb-xs">
+<span class="text-xs font-label-caps text-on-surface-variant">Output</span>
+<span class="text-[10px] text-on-secondary-fixed-variant">Success: 12ms</span>
+</div>
+<div class="font-label-code text-label-code text-secondary-fixed-dim">
+                        &gt; true
+                    </div>
+</div>
+</div>
+</aside>
+</main>
+<!-- Bottom Nav (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 bg-surface dark:bg-surface-dim border-t border-outline-variant shadow-sm flex justify-around items-center h-16 px-sm pb-safe">
+<div class="flex flex-col items-center justify-center text-on-surface-variant transition-transform duration-200 active:scale-90">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-caps text-[10px]">Dashboard</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-sm py-base transition-transform duration-200 active:scale-90">
+<span class="material-symbols-outlined">video_chat</span>
+<span class="font-label-caps text-[10px]">Room</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant transition-transform duration-200 active:scale-90">
+<span class="material-symbols-outlined">rate_review</span>
+<span class="font-label-caps text-[10px]">Feedback</span>
+</div>
+</nav>
+<!-- Micro-interactions Script -->
+<script>
+        const toggleBtn = document.getElementById('toggle-editor');
+        const panel = document.getElementById('collapsible-panel');
+        const canvas = document.getElementById('video-canvas');
+        let isOpen = true;
+
+        toggleBtn.addEventListener('click', () => {
+            if (isOpen) {
+                panel.style.width = '0px';
+                panel.style.opacity = '0';
+                panel.style.pointerEvents = 'none';
+                toggleBtn.classList.remove('bg-secondary-container');
+                toggleBtn.classList.add('bg-white/10');
+                toggleBtn.querySelector('.material-symbols-outlined').style.color = 'white';
+            } else {
+                panel.style.width = window.innerWidth < 768 ? '100%' : '600px';
+                panel.style.opacity = '1';
+                panel.style.pointerEvents = 'auto';
+                toggleBtn.classList.add('bg-secondary-container');
+                toggleBtn.classList.remove('bg-white/10');
+                toggleBtn.querySelector('.material-symbols-outlined').style.color = '';
+            }
+            isOpen = !isOpen;
+        });
+
+        // Responsive handling for the panel
+        window.addEventListener('resize', () => {
+            if (isOpen && window.innerWidth >= 768) {
+                panel.style.width = '600px';
+            }
+        });
+    </script>
+</body></html>

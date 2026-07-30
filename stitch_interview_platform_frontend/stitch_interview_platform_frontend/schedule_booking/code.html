@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>InterviewPro - Schedule &amp; Booking</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "error-container": "#ffdad6",
+                    "on-secondary-fixed": "#00201d",
+                    "secondary-fixed-dim": "#6bd8cb",
+                    "on-secondary": "#ffffff",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-container-highest": "#d3e4fe",
+                    "on-surface": "#0b1c30",
+                    "surface-bright": "#f8f9ff",
+                    "secondary-fixed": "#89f5e7",
+                    "surface-variant": "#d3e4fe",
+                    "secondary": "#006a61",
+                    "on-error-container": "#93000a",
+                    "inverse-on-surface": "#eaf1ff",
+                    "surface-container-high": "#dce9ff",
+                    "on-tertiary-container": "#818486",
+                    "on-secondary-container": "#006f66",
+                    "inverse-primary": "#bec6e0",
+                    "outline": "#76777d",
+                    "on-tertiary": "#ffffff",
+                    "primary-fixed-dim": "#bec6e0",
+                    "on-error": "#ffffff",
+                    "secondary-container": "#86f2e4",
+                    "tertiary-container": "#191c1e",
+                    "inverse-surface": "#213145",
+                    "on-secondary-fixed-variant": "#005049",
+                    "on-primary-container": "#7c839b",
+                    "on-surface-variant": "#45464d",
+                    "on-background": "#0b1c30",
+                    "on-primary-fixed": "#131b2e",
+                    "on-primary-fixed-variant": "#3f465c",
+                    "surface-container-low": "#eff4ff",
+                    "primary-container": "#131b2e",
+                    "error": "#ba1a1a",
+                    "on-primary": "#ffffff",
+                    "surface-container": "#e5eeff",
+                    "primary-fixed": "#dae2fd",
+                    "outline-variant": "#c6c6cd",
+                    "on-tertiary-fixed-variant": "#444749",
+                    "primary": "#000000",
+                    "surface-tint": "#565e74",
+                    "on-tertiary-fixed": "#191c1e",
+                    "background": "#f8f9ff",
+                    "surface-dim": "#cbdbf5",
+                    "surface": "#f8f9ff",
+                    "tertiary-fixed": "#e0e3e5",
+                    "tertiary-fixed-dim": "#c4c7c9",
+                    "tertiary": "#000000"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "xs": "8px",
+                    "container-max": "1280px",
+                    "md": "24px",
+                    "sm": "16px",
+                    "base": "4px",
+                    "lg": "48px",
+                    "xl": "80px",
+                    "gutter": "24px"
+            },
+            "fontFamily": {
+                    "headline-lg-mobile": ["Manrope"],
+                    "body-lg": ["Inter"],
+                    "label-caps": ["Inter"],
+                    "headline-xl": ["Manrope"],
+                    "label-code": ["JetBrains Mono"],
+                    "headline-lg": ["Manrope"],
+                    "headline-md": ["Manrope"],
+                    "body-sm": ["Inter"],
+                    "body-md": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "headline-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-code": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { background-color: #f8f9ff; color: #0b1c30; }
+        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #d3e4fe; border-radius: 10px; }
+        .glass-effect { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px); border: 1px solid #c6c6cd; }
+        .active-slot { background-color: #006a61 !important; color: white !important; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-body-md text-body-md overflow-x-hidden min-h-screen pb-20 md:pb-0">
+<!-- TopAppBar -->
+<header class="bg-surface dark:bg-surface-dim w-full top-0 sticky z-40 border-b border-outline-variant dark:border-outline">
+<div class="flex items-center justify-between px-md py-xs w-full max-w-container-max mx-auto">
+<div class="flex items-center gap-sm">
+<span class="font-headline-md text-headline-md font-bold text-secondary dark:text-secondary-fixed">InterviewPro</span>
+</div>
+<nav class="hidden md:flex items-center space-x-lg">
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-low dark:hover:bg-surface-container-high transition-colors duration-300 font-medium px-sm py-xs rounded-lg" href="#">Dashboard</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-low dark:hover:bg-surface-container-high transition-colors duration-300 font-medium px-sm py-xs rounded-lg" href="#">Room</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-low dark:hover:bg-surface-container-high transition-colors duration-300 font-medium px-sm py-xs rounded-lg" href="#">Jobs</a>
+<a class="text-secondary dark:text-secondary-fixed font-semibold px-sm py-xs rounded-lg bg-surface-container-low" href="#">Schedule</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-low dark:hover:bg-surface-container-high transition-colors duration-300 font-medium px-sm py-xs rounded-lg" href="#">Feedback</a>
+</nav>
+<div class="flex items-center gap-sm">
+<button class="material-symbols-outlined text-primary dark:text-primary-fixed p-xs rounded-full hover:bg-surface-container-low transition-colors active:scale-95">notifications</button>
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-outline-variant active:scale-95 transition-transform cursor-pointer">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a smiling young male software engineer with a minimalist light blue office background. The lighting is soft and corporate, matching a clean modern UI aesthetic. He wears a neutral grey polo shirt and glasses, conveying approachable confidence." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQecnWfKgBHrwJh_Ysn2i8CW2NcYxqOFpAYJPtPglQ0qhBkvzMMGd1D6LWtIEbuAziJrOgffu2_iylYKzje4-ZLRi0bD5IJGHPEJtKN9I_toP21fwZ58bYdX1YNX9oevFqJNSYIvpYMzaPwk6lMthDEgLiErUqDhQJu4FguMl322VvyCvcJhK84hbBB74UVzI_RtLZ6kp26fMJgvbA4xL4XLSqUdp1ZuSfIqnZMh3IhafAzicsFRg8"/>
+</div>
+</div>
+</div>
+</header>
+<main class="max-w-container-max mx-auto px-md py-lg grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Left: Side Navigation/Profile (Desktop Only) -->
+<aside class="hidden lg:block lg:col-span-3 space-y-md">
+<div class="bg-surface dark:bg-surface-dim shadow-lg dark:shadow-none h-auto w-full rounded-xl flex flex-col p-md space-y-base border border-outline-variant">
+<div class="flex items-center space-x-sm mb-md">
+<div class="w-12 h-12 rounded-full overflow-hidden bg-primary-container flex items-center justify-center">
+<img class="w-full h-full object-cover" data-alt="A close-up portrait of Alex Rivers, a senior developer candidate, showing a friendly and professional expression. The background is a clean, neutral gradient of soft blues and whites. The overall mood is institutional stability and modern efficiency." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAu4Z3nwbvmOxZp5IH6LJGM4QbCTq6gdiZW68Gfc7IOc__Pbd-DCgUjrz0IsP4jMPxnHvhJ6Aa05VkiCX_KK6avUwYA5f6ttJ4GWAZZ_P8-m0p2Rwm366LEDb-6r4Jx-xMcyyENsbazJRjLryTqiQilYgFJ2dzocAty4sdGXPmoBzpLKnVQ95MknVf5lg3m_UQgYlMS96_nhiUa3YusSAy2K5GnVI6CSs6rN0eOMSYMnusVI5iI6AZS"/>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface leading-tight">Alex Rivers</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Senior Developer</p>
+</div>
+</div>
+<div class="space-y-xs">
+<a class="flex items-center space-x-sm p-sm text-on-surface-variant hover:bg-surface-container-low rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-body-md text-body-md">My Profile</span>
+</a>
+<a class="flex items-center space-x-sm p-sm text-on-surface-variant hover:bg-surface-container-low rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">history</span>
+<span class="font-body-md text-body-md">Interview History</span>
+</a>
+<a class="flex items-center space-x-sm p-sm text-on-surface-variant hover:bg-surface-container-low rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">bookmark</span>
+<span class="font-body-md text-body-md">Saved Jobs</span>
+</a>
+<a class="flex items-center space-x-sm p-sm bg-secondary-container dark:bg-on-secondary-fixed-variant text-on-secondary-container dark:text-secondary-fixed-dim font-bold rounded-lg" href="#">
+<span class="material-symbols-outlined">calendar_month</span>
+<span class="font-body-md text-body-md">Schedule</span>
+</a>
+<a class="flex items-center space-x-sm p-sm text-on-surface-variant hover:bg-surface-container-low rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-body-md text-body-md">Settings</span>
+</a>
+</div>
+</div>
+<!-- Sync Status Card -->
+<div class="bg-white rounded-xl border border-outline-variant p-md">
+<h4 class="font-headline-md text-body-md font-bold mb-sm text-on-surface">Sync Status</h4>
+<div class="space-y-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-secondary text-sm">check_circle</span>
+<span class="text-body-sm">Google Calendar</span>
+</div>
+<span class="text-label-caps text-on-surface-variant">Active</span>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-outline text-sm">sync_disabled</span>
+<span class="text-body-sm">Outlook 365</span>
+</div>
+<button class="text-label-caps text-secondary font-bold hover:underline">Link</button>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content: Booking Interface -->
+<div class="lg:col-span-9 space-y-md">
+<!-- Hero Selection -->
+<div class="bg-white rounded-xl border border-outline-variant p-md lg:p-lg">
+<div class="mb-lg">
+<h1 class="font-headline-lg text-headline-lg text-on-surface mb-xs">Book Your Final Round</h1>
+<p class="text-on-surface-variant max-w-2xl">Select a 60-minute window for your technical system design interview with the Engineering Team. All times are automatically adjusted to your local timezone (GMT-5).</p>
+</div>
+<div class="grid grid-cols-1 xl:grid-cols-2 gap-lg">
+<!-- Calendar Section -->
+<div class="space-y-md">
+<div class="flex items-center justify-between mb-sm">
+<h3 class="font-headline-md text-headline-md text-on-surface">September 2024</h3>
+<div class="flex gap-xs">
+<button class="p-xs hover:bg-surface-container rounded-full transition-colors material-symbols-outlined">chevron_left</button>
+<button class="p-xs hover:bg-surface-container rounded-full transition-colors material-symbols-outlined">chevron_right</button>
+</div>
+</div>
+<div class="calendar-grid text-center text-label-caps text-on-surface-variant font-bold mb-xs">
+<div>SUN</div><div>MON</div><div>TUE</div><div>WED</div><div>THU</div><div>FRI</div><div>SAT</div>
+</div>
+<div class="calendar-grid gap-y-xs">
+<!-- Empty days -->
+<div class="aspect-square flex items-center justify-center text-on-surface-variant opacity-25">25</div>
+<div class="aspect-square flex items-center justify-center text-on-surface-variant opacity-25">26</div>
+<div class="aspect-square flex items-center justify-center text-on-surface-variant opacity-25">27</div>
+<div class="aspect-square flex items-center justify-center text-on-surface-variant opacity-25">28</div>
+<div class="aspect-square flex items-center justify-center text-on-surface-variant opacity-25">29</div>
+<div class="aspect-square flex items-center justify-center text-on-surface-variant opacity-25">30</div>
+<div class="aspect-square flex items-center justify-center font-medium hover:bg-surface-container cursor-pointer rounded-lg">1</div>
+<div class="aspect-square flex items-center justify-center font-medium hover:bg-surface-container cursor-pointer rounded-lg">2</div>
+<div class="aspect-square flex items-center justify-center font-medium hover:bg-surface-container cursor-pointer rounded-lg">3</div>
+<div class="aspect-square flex items-center justify-center font-medium hover:bg-surface-container cursor-pointer rounded-lg">4</div>
+<div class="aspect-square flex items-center justify-center font-medium hover:bg-surface-container cursor-pointer rounded-lg">5</div>
+<div class="aspect-square flex items-center justify-center font-medium hover:bg-surface-container cursor-pointer rounded-lg">6</div>
+<div class="aspect-square flex items-center justify-center font-medium hover:bg-surface-container cursor-pointer rounded-lg">7</div>
+<div class="aspect-square flex items-center justify-center font-medium hover:bg-surface-container cursor-pointer rounded-lg">8</div>
+<div class="aspect-square flex items-center justify-center font-medium hover:bg-surface-container cursor-pointer rounded-lg">9</div>
+<div class="aspect-square flex items-center justify-center font-medium hover:bg-surface-container cursor-pointer rounded-lg">10</div>
+<div class="aspect-square flex items-center justify-center font-medium bg-secondary text-on-secondary rounded-lg ring-4 ring-secondary-container">11</div>
+<div class="aspect-square flex items-center justify-center font-medium hover:bg-surface-container cursor-pointer rounded-lg relative">
+                                12
+                                <span class="absolute bottom-1 w-1 h-1 bg-secondary rounded-full"></span>
+</div>
+<div class="aspect-square flex items-center justify-center font-medium hover:bg-surface-container cursor-pointer rounded-lg relative">
+                                13
+                                <span class="absolute bottom-1 w-1 h-1 bg-secondary rounded-full"></span>
+</div>
+<div class="aspect-square flex items-center justify-center font-medium hover:bg-surface-container cursor-pointer rounded-lg">14</div>
+<div class="aspect-square flex items-center justify-center font-medium hover:bg-surface-container cursor-pointer rounded-lg">15</div>
+<div class="aspect-square flex items-center justify-center font-medium hover:bg-surface-container cursor-pointer rounded-lg">16</div>
+<div class="aspect-square flex items-center justify-center font-medium hover:bg-surface-container cursor-pointer rounded-lg">17</div>
+<div class="aspect-square flex items-center justify-center font-medium hover:bg-surface-container cursor-pointer rounded-lg">18</div>
+<div class="aspect-square flex items-center justify-center font-medium hover:bg-surface-container cursor-pointer rounded-lg relative">
+                                19
+                                <span class="absolute bottom-1 w-1 h-1 bg-secondary rounded-full"></span>
+</div>
+<div class="aspect-square flex items-center justify-center font-medium hover:bg-surface-container cursor-pointer rounded-lg">20</div>
+</div>
+</div>
+<!-- Time Slots Section -->
+<div class="space-y-md">
+<div class="flex items-center justify-between">
+<h3 class="font-headline-md text-headline-md text-on-surface">Wednesday, Sept 11</h3>
+<span class="text-body-sm text-secondary font-semibold">4 slots available</span>
+</div>
+<div class="grid grid-cols-2 gap-sm">
+<button class="time-slot px-md py-sm border border-outline-variant rounded-xl text-on-surface-variant font-medium hover:border-secondary hover:text-secondary transition-all active:scale-95 text-center">
+                                09:00 AM
+                            </button>
+<button class="time-slot px-md py-sm border border-outline-variant rounded-xl text-on-surface-variant font-medium hover:border-secondary hover:text-secondary transition-all active:scale-95 text-center active-slot">
+                                10:30 AM
+                            </button>
+<button class="time-slot px-md py-sm border border-outline-variant rounded-xl text-on-surface-variant font-medium hover:border-secondary hover:text-secondary transition-all active:scale-95 text-center">
+                                01:00 PM
+                            </button>
+<button class="time-slot px-md py-sm border border-outline-variant rounded-xl text-on-surface-variant font-medium hover:border-secondary hover:text-secondary transition-all active:scale-95 text-center">
+                                03:30 PM
+                            </button>
+</div>
+<div class="bg-surface-container-low rounded-xl p-md space-y-sm">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-secondary">info</span>
+<span class="text-body-sm text-on-surface">You are booking a <strong>System Design</strong> session with <strong>Sarah Chen</strong>.</span>
+</div>
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-secondary">videocam</span>
+<span class="text-body-sm text-on-surface">InterviewPro Virtual Room</span>
+</div>
+</div>
+<button class="w-full bg-secondary text-on-secondary py-md rounded-xl font-bold text-lg hover:brightness-110 active:scale-[0.98] transition-all shadow-lg shadow-secondary/20">
+                            Confirm Booking
+                        </button>
+</div>
+</div>
+</div>
+<!-- Upcoming Grid (Bento Style) -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-sm">
+<div class="md:col-span-2 bg-white border border-outline-variant rounded-xl p-md flex flex-col justify-between">
+<div>
+<h4 class="text-label-caps text-on-surface-variant mb-xs">NEXT INTERVIEW</h4>
+<h3 class="font-headline-md text-on-surface">UI/UX Strategy Session</h3>
+<p class="text-body-sm text-on-surface-variant mb-md">Tomorrow, 10:00 AM - 11:00 AM</p>
+</div>
+<div class="flex items-center justify-between mt-auto">
+<div class="flex -space-x-2">
+<img class="w-8 h-8 rounded-full border-2 border-white object-cover" data-alt="Close up of a female recruiter portrait with professional soft lighting. She is wearing a modern teal blazer, standing against a blurred corporate office background. High-end modern photography style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCFV9VfJewGVhAUGgJfeXnC3hwhY66T705uRNNHL465b6VhnjTMoTiW1zqJse3FsKyzr-he1J0abZmaPOmMr2pD9QqGMshNI_DqakqsIGurIm_lNsN8HzvvltTy6nZe3GYir7FV51QxTp4NJWPfV1J0-MU-Q59fwhOLPm4AEXYRKhrnBOH1dOdFuO3QB8gV8-KxDOm-lSg8TGDUIhjalxHNYKR_AnD__dhd0IW9E4CpGmx4c-fU89IZ"/>
+<img class="w-8 h-8 rounded-full border-2 border-white object-cover" data-alt="Professional male interviewer portrait in a clean, minimalist setting. Warm natural lighting, looking into the camera with a calm expression. Wearing a navy blue sweater." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDq1rw7xnxfTvE1YXifDgD-vQKaKnzICoFECqWzq7Yv-a7qxTjm8W7U9nTO6UCBvLPfNXrQ9ep8tEPEAwZQtLmOK58EGldC9rtKBCWNfQTqXwpabJLIR1j9XFgefnmvD1rrj8DTDVvszrZBvzy28jbRXm7cPt9Ewf6mFwY0MEswmObFSARCO1MrbxUaq5lQccvuLduzvegAclmMoG7ZNBpKPQUnH0oaquwSjnaBECxgPA3F_hzbE5km"/>
+<div class="w-8 h-8 rounded-full border-2 border-white bg-surface-container flex items-center justify-center text-[10px] font-bold">+2</div>
+</div>
+<button class="text-secondary font-bold text-body-sm flex items-center gap-xs hover:underline">
+                            Details <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+</div>
+<div class="bg-primary-container text-on-primary-container rounded-xl p-md flex flex-col justify-center items-center text-center">
+<span class="material-symbols-outlined text-4xl mb-sm" style="font-variation-settings: 'FILL' 1;">event_available</span>
+<h3 class="font-bold text-headline-md">3</h3>
+<p class="text-body-sm opacity-80">Interviews this week</p>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile) -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 bg-surface dark:bg-surface-dim border-t border-outline-variant dark:border-outline shadow-sm h-16 flex justify-around items-center px-sm pb-safe">
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant hover:text-secondary transition-transform active:scale-90 duration-200">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-caps text-label-caps">Dashboard</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant hover:text-secondary transition-transform active:scale-90 duration-200">
+<span class="material-symbols-outlined">video_chat</span>
+<span class="font-label-caps text-label-caps">Room</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant hover:text-secondary transition-transform active:scale-90 duration-200">
+<span class="material-symbols-outlined">work</span>
+<span class="font-label-caps text-label-caps">Jobs</span>
+</button>
+<button class="flex flex-col items-center justify-center bg-secondary-container dark:bg-on-secondary-fixed-variant text-on-secondary-container dark:text-secondary-fixed-dim rounded-full px-sm py-base active:scale-90 transition-transform duration-200">
+<span class="material-symbols-outlined">calendar_month</span>
+<span class="font-label-caps text-label-caps">Schedule</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant hover:text-secondary transition-transform active:scale-90 duration-200">
+<span class="material-symbols-outlined">rate_review</span>
+<span class="font-label-caps text-label-caps">Feedback</span>
+</button>
+</nav>
+<script>
+        document.querySelectorAll('.time-slot').forEach(slot => {
+            slot.addEventListener('click', () => {
+                document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('active-slot'));
+                slot.classList.add('active-slot');
+            });
+        });
+
+        // Add a micro-interaction for calendar days
+        document.querySelectorAll('.calendar-grid div').forEach(day => {
+            if(day.textContent.trim() && !day.classList.contains('opacity-25')) {
+                day.addEventListener('click', () => {
+                   if (!day.classList.contains('bg-secondary')) {
+                       // Visual feedback for selection
+                       const currentActive = document.querySelector('.calendar-grid .bg-secondary');
+                       if (currentActive) {
+                           currentActive.classList.remove('bg-secondary', 'text-on-secondary', 'ring-4', 'ring-secondary-container');
+                           currentActive.classList.add('hover:bg-surface-container');
+                       }
+                       day.classList.add('bg-secondary', 'text-on-secondary', 'ring-4', 'ring-secondary-container');
+                       day.classList.remove('hover:bg-surface-container');
+                   }
+                });
+            }
+        });
+    </script>
+</body></html>
