@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import api from '../services/api';
 
 const AuthContext = createContext();
 
@@ -11,7 +12,8 @@ export const AuthProvider = ({ children }) => {
       id: 'usr_101',
       name: 'Alex Mercer',
       email: 'alex.mercer@example.com',
-      role: 'user', // 'user' or 'admin'
+      role: 'user',
+      isEmailVerified: true,
       avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
       title: 'Full Stack Engineer Candidate',
       experienceLevel: 'Intermediate',
@@ -44,19 +46,23 @@ export const AuthProvider = ({ children }) => {
   }, [currentUser]);
 
   const login = async (email, password) => {
-    // Simulated API call
-    const role = email.includes('admin') ? 'admin' : 'user';
+    const apiRes = await api.login(email, password);
+    const apiUser = apiRes?.user;
+    const role = (apiUser?.role || (email.includes('admin') ? 'admin' : 'user'));
+
     const user = {
-      id: 'usr_' + Date.now(),
-      name: email.split('@')[0].replace('.', ' ').toUpperCase(),
+      id: apiUser?._id || apiUser?.id || 'usr_' + Date.now(),
+      _id: apiUser?._id,
+      name: apiUser?.name || email.split('@')[0].replace('.', ' ').toUpperCase(),
       email: email,
       role: role,
-      avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
+      isEmailVerified: apiUser?.isEmailVerified ?? true,
+      avatar: apiUser?.avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
       title: role === 'admin' ? 'Platform Administrator' : 'Software Engineer Candidate',
-      experienceLevel: 'Intermediate',
-      targetRole: 'Fullstack Developer',
-      skills: ['React', 'JavaScript', 'Node.js', 'System Design'],
-      subscription: {
+      experienceLevel: apiUser?.experienceLevel || 'Intermediate',
+      targetRole: apiUser?.targetRole || 'Fullstack Developer',
+      skills: apiUser?.skills?.length ? apiUser.skills : ['React', 'JavaScript', 'Node.js', 'System Design'],
+      subscription: apiUser?.subscription || {
         plan: 'Pro Tier',
         status: 'active',
         renewsOn: '2026-12-31'
@@ -68,19 +74,25 @@ export const AuthProvider = ({ children }) => {
         streakDays: 4
       }
     };
+
     setCurrentUser(user);
     return user;
   };
 
   const signup = async (name, email, password, targetRole = 'Full Stack Engineer') => {
-    const userName = name || 'New Candidate';
-    const userEmail = email || 'candidate@example.com';
+    const apiRes = await api.signup(name, email, password, targetRole);
+    const apiUser = apiRes?.user;
+    const userName = apiUser?.name || name || 'New Candidate';
+    const userEmail = apiUser?.email || email || 'candidate@example.com';
+
     const user = {
-      id: 'usr_' + Date.now(),
+      id: apiUser?._id || apiUser?.id || 'usr_' + Date.now(),
+      _id: apiUser?._id,
       name: userName,
       email: userEmail,
       role: 'user',
-      avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
+      isEmailVerified: apiUser?.isEmailVerified || false,
+      avatar: apiUser?.avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
       title: targetRole || 'Software Engineer Candidate',
       experienceLevel: 'Intermediate',
       targetRole: targetRole || 'Senior Full Stack Developer',
@@ -97,15 +109,39 @@ export const AuthProvider = ({ children }) => {
         streakDays: 1
       }
     };
+
     setCurrentUser(user);
-    return user;
+    return { user, otpCode: apiRes?.otpCode };
+  };
+
+  const sendOtp = async (email) => {
+    return await api.sendOtp(email);
+  };
+
+  const verifyOtp = async (email, otpCode) => {
+    const res = await api.verifyOtp(email, otpCode);
+    if (res?.success) {
+      setCurrentUser(prev => prev ? { ...prev, isEmailVerified: true } : prev);
+    }
+    return res;
+  };
+
+  const forgotPassword = async (email) => {
+    return await api.forgotPassword(email);
+  };
+
+  const resetPassword = async (email, otpCode, newPassword) => {
+    return await api.resetPassword(email, otpCode, newPassword);
   };
 
   const logout = () => {
     setCurrentUser(null);
   };
 
-  const updateProfile = (updatedFields) => {
+  const updateProfile = async (updatedFields) => {
+    if (currentUser?.id || currentUser?._id) {
+      api.updateProfile(currentUser._id || currentUser.id, updatedFields);
+    }
     setCurrentUser(prev => ({
       ...prev,
       ...updatedFields
@@ -126,6 +162,10 @@ export const AuthProvider = ({ children }) => {
       isAdmin,
       login,
       signup,
+      sendOtp,
+      verifyOtp,
+      forgotPassword,
+      resetPassword,
       logout,
       updateProfile,
       toggleRole

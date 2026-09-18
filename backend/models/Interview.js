@@ -1,5 +1,6 @@
-// Mongoose Interview Schema Definition
-export const InterviewSchema = {
+import mongoose from 'mongoose';
+
+const interviewSchema = new mongoose.Schema({
   userId: { type: String, required: true },
   title: { type: String, required: true },
   type: { type: String, enum: ['Technical', 'HR', 'Behavioral', 'System Design', 'Coding'], required: true },
@@ -22,4 +23,7 @@ export const InterviewSchema = {
     }
   ],
   createdAt: { type: Date, default: Date.now }
-};
+});
+
+export const Interview = mongoose.models.Interview || mongoose.model('Interview', interviewSchema);
+export default Interview;

@@ -1,10 +1,14 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import api from '../services/api';
+import { useAuth } from './AuthContext';
 
 const InterviewContext = createContext();
 
 export const useInterview = () => useContext(InterviewContext);
 
 export const InterviewProvider = ({ children }) => {
+  const { currentUser } = useAuth();
+
   // History of completed interviews
   const [completedInterviews, setCompletedInterviews] = useState([
     {
@@ -31,70 +35,32 @@ export const InterviewProvider = ({ children }) => {
           userAnswer: "Server components run on the server and do not ship JavaScript to the client bundle. Client components run on the client for interactivity using 'use client'.",
           aiFeedback: "Excellent summary. You accurately highlighted zero-bundle impact.",
           sampleAnswer: "Server Components execute solely on the server, rendering HTML/RSC payloads without increasing client JS bundle size. Client Components handle browser interactivity, state, and DOM listeners."
-        },
-        {
-          question: "How do you mitigate memory leaks when using WebSockets inside long-lived React components?",
-          userAnswer: "By closing the WebSocket connection inside the cleanup function returned by useEffect hook.",
-          aiFeedback: "Spot on! Always handle component unmount lifecycle cleanup.",
-          sampleAnswer: "Return a cleanup function in useEffect to invoke socket.close() or remove event listeners, preventing dangling callbacks."
-        }
-      ]
-    },
-    {
-      id: 'int_902',
-      title: 'System Design & Scalability Mock',
-      type: 'System Design',
-      company: 'Amazon',
-      date: '2026-07-25',
-      durationMinutes: 45,
-      score: 84,
-      communicationScore: 82,
-      technicalScore: 86,
-      confidenceScore: 85,
-      grammarScore: 92,
-      problemSolvingScore: 88,
-      leadershipScore: 80,
-      bodyLanguageScore: 82,
-      eyeContactScore: 84,
-      strengths: ['Solid trade-off evaluation between SQL and NoSQL databases', 'Good understanding of horizontal vs vertical scaling'],
-      improvements: ['Include rate limiting and API Gateway patterns earlier in the design', 'Be more explicit about DB replication lag'],
-      questionsAsked: [
-        {
-          question: "How would you design a rate limiter supporting 100,000 requests per second?",
-          userAnswer: "I would use Redis with a Sliding Window Log or Token Bucket algorithm at the API Gateway level.",
-          aiFeedback: "Strong answer highlighting distributed caching.",
-          sampleAnswer: "Implement Redis Token Bucket algorithm at the API Gateway level with distributed locks and fallback degradation."
-        }
-      ]
-    },
-    {
-      id: 'int_903',
-      title: 'Behavioral & Leadership Alignment',
-      type: 'HR / Behavioral',
-      company: 'Google',
-      date: '2026-07-20',
-      durationMinutes: 20,
-      score: 89,
-      communicationScore: 94,
-      technicalScore: 85,
-      confidenceScore: 91,
-      grammarScore: 96,
-      problemSolvingScore: 86,
-      leadershipScore: 92,
-      bodyLanguageScore: 90,
-      eyeContactScore: 93,
-      strengths: ['Used the STAR method effectively (Situation, Task, Action, Result)', 'Showed empathy and conflict resolution skills'],
-      improvements: ['Quantify business results with concrete percentages or revenue numbers where possible'],
-      questionsAsked: [
-        {
-          question: "Tell me about a time when you disagreed with a technical decision made by your team lead.",
-          userAnswer: "I presented data comparing serverless cold start times vs containerized services and suggested a hybrid POC.",
-          aiFeedback: "Great objective approach using metrics rather than emotion.",
-          sampleAnswer: "Focus on data-driven persuasion, listening actively to tradeoffs, and committing to the final team consensus."
         }
       ]
     }
   ]);
+
+  // Load backend history on user change
+  useEffect(() => {
+    const fetchHistory = async () => {
+      if (currentUser?.id || currentUser?._id) {
+        const historyRes = await api.getInterviewHistory(currentUser._id || currentUser.id);
+        if (historyRes?.interviews?.length) {
+          const formatted = historyRes.interviews.map(i => ({
+            ...i,
+            id: i._id || i.id,
+            date: i.createdAt ? i.createdAt.split('T')[0] : '2026-09-18'
+          }));
+          setCompletedInterviews(prev => {
+            const combined = [...formatted, ...prev];
+            const unique = Array.from(new Map(combined.map(item => [item.id, item])).values());
+            return unique;
+          });
+        }
+      }
+    };
+    fetchHistory();
+  }, [currentUser]);
 
   // Current active interview setup
   const [activeSession, setActiveSession] = useState(null);
@@ -121,8 +87,17 @@ export const InterviewProvider = ({ children }) => {
     }
   ]);
 
-  const saveCompletedInterview = (report) => {
-    setCompletedInterviews(prev => [report, ...prev]);
+  const saveCompletedInterview = async (report) => {
+    const payload = {
+      ...report,
+      userId: currentUser?._id || currentUser?.id || 'usr_101'
+    };
+
+    // Save to MongoDB Atlas via backend API
+    const savedDoc = await api.saveInterviewEvaluation(payload);
+    const finalReport = savedDoc ? { ...report, id: savedDoc._id || savedDoc.id } : report;
+
+    setCompletedInterviews(prev => [finalReport, ...prev]);
   };
 
   const addScheduledInterview = (booking) => {
