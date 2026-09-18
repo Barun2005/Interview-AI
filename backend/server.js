@@ -504,15 +504,15 @@ app.post('/api/resume/analyze', (req, res) => {
 const distPath = path.join(__dirname, '../dist');
 app.use(express.static(distPath));
 
-app.get('*', (req, res) => {
-  if (req.path.startsWith('/api')) {
-    return res.status(404).json({ error: 'API route not found' });
+app.use((req, res, next) => {
+  if (req.method === 'GET' && !req.path.startsWith('/api')) {
+    return res.sendFile(path.join(distPath, 'index.html'), (err) => {
+      if (err) {
+        res.status(404).send('Interview AI - Production Build Not Found');
+      }
+    });
   }
-  res.sendFile(path.join(distPath, 'index.html'), (err) => {
-    if (err) {
-      res.status(404).send('Interview AI - Production Build Not Found');
-    }
-  });
+  next();
 });
 
 app.listen(PORT, () => {
